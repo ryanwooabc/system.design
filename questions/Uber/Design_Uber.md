@@ -1,16 +1,15 @@
-# 0000-system-uber
+# Design Uber
 
 ## Functional Requirement
-- drivers send their location and availability to the system every 3 seconds
-- passengers can get nearby available drivers from the system
-- passengers can request a ride, and the system will notify nearby drivers
-- a driver will accept the ride, and both will see each other's location until trip done
-- the driver will complite the ride and become available once the trip done
-- QuadTree (Dynamic Grid) with frequent updates
+- show real time location of drivers and riders
+- rider request, driver accept, start/end trip
+- rider/driver location matching
+- time/distance/fee estimation, payment
 
 ## Non-functional Requirement
 - high reliability/availability/scalability
-- low latency
+- low latency: update location every 3s
+- high consistency: 
 - QuadTree can help to find nearby driver quickly but fast update is not guaranteed
 
 ## Capacity Estimatioin
