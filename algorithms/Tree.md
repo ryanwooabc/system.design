@@ -1,0 +1,12 @@
+# Tree
+- https://towardsdatascience.com/5-types-of-binary-tree-with-cool-illustrations-9b335c430254
+- complete binary tree: 1. all levels are full except the last, 2. all nodes are at the left in the last level
+- full binary tree: each node has 0 or 2 children
+- perfect binary tree: all nodes have 2 children except the leaves
+- balanced binary tree: the height difference between left and right substree of each node is at most 1
+- Degenerated / Pathological binary tree, all parents have only one child, 退化，病理
+- Red black tree
+- AVL Tree
+- B tree: self balanced, all internal and leaf nodes have data pointers
+- B+ tree: only leaf nodes have data pointers
+- B+ tree for DB: 1. more keys and pointers for index, less IO, 2. all query paths have the same length, 3. less scan for all data/leaf nodes
