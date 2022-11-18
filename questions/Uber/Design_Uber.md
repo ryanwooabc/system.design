@@ -1,21 +1,37 @@
 # Design Uber
 
+## Read
+- https://www.educative.io/courses/grokking-modern-system-design-interview-for-engineers-managers/qA6OYXKpOn0
+
 ## Functional Requirement
-- show real time location of drivers and riders
-- rider request, driver accept, start/end trip
-- rider/driver location matching
-- time/distance/fee estimation, payment
+- update driver location
+- find nearby drivers
+- request a ride
+- manage payment
+- estimate arrival time
+- confirm pickup
+- show trip update
+- end the trip
 
 ## Non-functional Requirement
 - high reliability/availability/scalability
-- low latency: update location every 3s
-- strong consistency for order and payment
+- low latency: update location every second
+- strong consistency for location, order and payment
+- fraud detection
 
 ## Capacity Estimatioin
-- 300M riders, 1M drivers, 1M rides / day
-- DAU: 1M riders, 500K drivers
-- Inbound: (ID 4 bytes + Lat 8 + Lon 8) * 500K = 10MBps
+- Totally 500M riders, 5M drivers
+- DAU: 20M riders, 3M drivers, 20M rides
+- 1H per ride, update location every second
+- QPS: 20M / 24 ~= 1M reads/writes
+- QPS: 20M * 3600 / 24 / 3600
+- Rider Store: 500M * 1K = 500GB
+- Location Store: 100Byte * 1M * 24 * 3600 * 365 * 5 = 100Byte * 1M * 10^5 * 2K = 20PB
+- Bandwidth: 1M * 100Bps = 800 Mbps
+- Server: 1M / 10K = 100
 
+## Infrastructure
+- DB, Cache, CDN, LB
 
 ## System API
 
@@ -89,7 +105,7 @@
 - https://engineering.grab.com/beyond-retries-part-3
 - [Event processing] Trident - Real-time Event Processing at Scale
 - https://engineering.grab.com/trident-real-time-event-processing-at-scale
-- [Algorithm] : Using Client-Side Map Data to Improve Real-Time Positioning:
+- [Algorithm]: Using Client-Side Map Data to Improve Real-Time Positioning:
 - https://eng.lyft.com/using-client-side-map-data-to-improve-real-time-positioning-a382585ac6e
 - How does Uber scale to millions of concurrent requests?
 - https://www.youtube.com/watch?v=DY2AR8Wzg3Y
