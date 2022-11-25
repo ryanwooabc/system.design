@@ -29,6 +29,7 @@
 - high availability
 - high scalability
 - low latency
+- high consistency
 
 ## Capacity Estimation
 
