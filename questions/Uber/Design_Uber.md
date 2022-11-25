@@ -36,12 +36,12 @@
 ## System API
 
 ## Database Design
-- passengers(id, lastName, firstName, gender, birthDate, phone, email)
+- Riders(id, lastName, firstName, gender, birthDate, phone, email)
 - drivers(id, lastName, firstName, gender, birthDate, maker, model, color, plate, phone, email)
 
 ## High-level Design
 
-- Passenger ---> LB ---> Aggragator
+- Rider ---> LB ---> Aggragator
 -            \               |
 -             PN         QuadTreeServer  <--- QuadTreeIndex ---> LocationDB
 -           /      \         |
@@ -60,18 +60,18 @@
 - pub/sub model, subscribe when opening app
 - broadcast when DriverLocHashTable changed
 - one driver has 5 subscribers
-- Memory: DriverID 4 bytes * 500K + PassengerID 8 bytes * 500K * 3 = 21 MB
+- Memory: DriverID 4 bytes * 500K + RiderID 8 bytes * 500K * 3 = 21 MB
 - Outbound: (DriverID 4 bytes + Lat 8 + Lon 8) * 500K * 5 = 50 MBps
 - TODO: Pull when adding new drivers for existing subscribers
 
 ### Request Ride
-- a passenger sends the request
+- a Rider sends the request
 - a aggragator requests nearby drivers from QuadTree servers
 - the aggregator collect all of the result and sort by the rating
 - the aggregator will send ride request to top 3 drivers
 - one drivers will accept the request and send acknowledgement
 - the aggregator will send cancelation to other drivers
-- the aggregator will notify the passenger
+- the aggregator will notify the Rider
 
 ## Availability
 - primary-second: location server, notification server
@@ -86,7 +86,7 @@
 - pull vs push
 
 ## Terminology
-- passenger
+- Rider
 - regularly
 - propagate,传播，宣传，繁殖
 - cushion
