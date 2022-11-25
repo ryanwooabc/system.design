@@ -3,7 +3,7 @@
 # 0000-system-ticket-master
 
 ## Functional Requirement
-- list cities -> movies -> theaters -> shows
+- list cities -> movies -> cinemas -> shows
 - the system shows seating arrangement
 - a user can select multiple seats
 - seat status: avaiable, hold, booked
@@ -20,7 +20,7 @@
 
 ## Capacity Estimatioin
 - 3B page views / month, 10M tickets / month
-- 500 cities * 10 theaters * 10 rooms * 200 seats * 5 shows * 100 bytes = 5GB / day
+- 500 cities * 10 cinemas * 10 rooms * 200 seats * 5 shows * 100 bytes = 5GB / day
 - Storage 5GB * 365 * 5 = 10 TB
 
 ## System API
@@ -30,15 +30,15 @@
 - boolean book(token, showId, seatIDs)
 	
 ## Database Design
-- cities(id, name, state, lat, lon)
-- theaters(id, name, cityId)
+- users(id, lastName, firstName, email, phone, pass)
+- cities(id, name, state)
+- cinemas(id, name, cityId, lat, lon)
 - rooms(id, name, theaterId)
 - seats(id, no, type, roomId)
 - movies(id, title, desc, duration, lang, released, country, genre)
 - shows(id, movieId, roomId, date, start, end)
-- users(id, lastName, firstName, email, phone, pass)
-- bookings(id, userId, showId, time, seats)
-- show_seats(id, showId, seatId, price, status, bookingID)
+- show_seats(id, showId, seatId, price, status, bookingID) # pre-create
+- bookings(id, userId, showId, time)
 - payments(id, amount, transactionId, timestamp, status)
 
 ## High-level Design
@@ -52,18 +52,18 @@
 
 ### Booking Workflow
 - select city, search and choose movie
-- list theaters, select a show, list seats
+- list cinemas, select a show, list seats
 - select seats, make a bookingId
 - back to seat page if booking failed
 - wait at seat page if some seats hold
 - pay in 5 minutes if booking successful
 
 ### ActiveBookingService
-- Keep <ShowID, LinkedHashMap<BookingID, Timestamp>> in memory
+- LRU, Keep <ShowID, LinkedHashMap<BookingID, Timestamp>> in memory
 - drop bookings if expired or payed
 
 ### WaitingUserService
-- Keep <ShowID, LinkedHashMap<UserID, Timestamp>> in memory
+- LRU, Keep <ShowID, LinkedHashMap<UserID, Timestamp>> in memory
 
 ## Concurrency
 - begin transaction
