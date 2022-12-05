@@ -36,6 +36,19 @@ class Solution {
          - 遍历所有根，计算总组数
          - Time: O(V * E)
          - Space: O(V + E)
+		 
+        # Solution2: BFS + Bipartite 
+         - 遍历所有边，转成无向图
+         - 遍历所有顶点i，从i出发找出图的深度
+			- 创建层次数组，和BFS队列，初始化level[i]=1
+			- 遍历队列的所有元素，每次d加一
+				- 更新连通图里最小顶点r
+				- 对每个顶点的邻居，如果level没有赋值，则为d+1
+				- 如果level为d，则不能为二分图，返回-1
+			- 连通图里最小顶点的为d-1
+         - 遍历所有根，计算总组数
+         - Time: O(V * E)
+         - Space: O(V + E)		
     */
     public int magnificentSets(int n, int[][] edges) {
         int[] root = new int[n], depth = new int[n];
@@ -86,6 +99,44 @@ class Solution {
                 }
             }
             level = next;
+        }
+        return ans;
+    }
+	
+    public int magnificentSets(int n, int[][] edges) {
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] e : edges) {
+            int a = e[0] - 1, b = e[1] - 1;
+            graph[a].add(b);
+            graph[b].add(a);
+        }
+        int[] depth = new int[n];
+        for (int i = 0; i < n; i++) {
+            int r = n, d = 1;
+            int[] level = new int[n];
+            Queue<Integer> bfs = new ArrayDeque<Integer>();
+            for (bfs.add(i), level[i] = 1; !bfs.isEmpty(); d ++) {
+                for (int m = bfs.size(); m > 0; m --) {
+                    int a = bfs.poll();
+                    r = Math.min(r, a);
+                    for (int b : graph[a]) {
+                        if (level[b] == 0) {
+                            bfs.add(b);
+                            level[b] = d + 1;
+                        } else if (level[b] == d) {
+                            return -1;
+                        }
+                    }
+                }
+            }            
+            depth[r] = Math.max(depth[r], d - 1);
+        }
+        int ans = 0;
+        for (int i = 0; i < n; i ++) {
+            ans += depth[i];
         }
         return ans;
     }
