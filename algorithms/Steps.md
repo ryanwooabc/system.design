@@ -19,10 +19,10 @@
 
 # Solution1: 
  - Idea: Two for loop to check all possible answer 
- - Time: O(n^2)
+ - Time: O(N^2)
  - Space: O(1)
 
 # Solution2:
  - Idea: Use Hashmap to record element seen before
- - Time: O(n)
- - Space: O(n)
+ - Time: O(N)
+ - Space: O(N)
