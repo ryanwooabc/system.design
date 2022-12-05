@@ -40,7 +40,7 @@
 - TweetID: 300B * 5 bytes = 1.5 TB
 - Distributed KV Store: <Word, List<TweetID>>
 - 40 words but only 15 except "the", "an", "and" etc
-- Memory: 1.5G * 15 = 22 TB
+- Memory: 1.5T * 15 = 22 TB
 - Machines: 22 TB = 128 GB * 172 servers
 
 ## Sharding
